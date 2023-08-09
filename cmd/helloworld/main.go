@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"os"
 
 	"helloworld/internal/conf"
@@ -64,6 +65,8 @@ func main() {
 		),
 	)
 	defer c.Close()
+	m := map[string]interface{}{"a": 1}
+	logger.Log(log.LevelInfo, "m", m)
 
 	if err := c.Load(); err != nil {
 		panic(err)
@@ -84,4 +87,5 @@ func main() {
 	if err := app.Run(); err != nil {
 		panic(err)
 	}
+	fmt.Println()
 }

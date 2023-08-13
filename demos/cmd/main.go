@@ -58,14 +58,14 @@ func safeWRMap() {
 func ConcurrencyNotSafe() {
 	var wg sync.WaitGroup
 	data := make(map[int]int)
-	numRoutines := 500000
+	numRoutines := 50000
 
 	//for i := 0; i < 100; i++ {
 	//	wg.Add(1)
 	//	go func(i int) {
 	//		defer wg.Done()
 	//		data[i] = i
-	//		fmt.Printf("Wrote: data[%d] = %d\n", i, i)
+	//		//fmt.Printf("Wrote: data[%d] = %d\n", i, i)
 	//	}(i)
 	//}
 
@@ -74,7 +74,7 @@ func ConcurrencyNotSafe() {
 		go func(i int) {
 			defer wg.Done()
 			randomInRange := rand.Intn(numRoutines)
-			//fmt.Printf("Wrote: data[%d] = %d\n", i, i)
+			fmt.Printf("Wrote: data[%d] = %d\n", i, i)
 			fmt.Println("dict value:%d, %d", randomInRange, data[randomInRange])
 		}(i)
 	}
@@ -88,13 +88,13 @@ func ConcurrencyNotSafe() {
 	}
 }
 
-// 结论1：多个goroutine同时读map可能出现数据竞争状态，因为map是并发不安全的
+// 结论1：多个goroutine同时读map不会出现数据竞争状态
 // 结论2：多个goroutine同时"读写"同一个map，数据的竞争状态会出现的非常快速
 func main() {
 	fmt.Print("demos begin")
 	//MapRace()
-	//ConcurrencyNotSafe()
+	ConcurrencyNotSafe()
 
-	safeWRMap()
+	//safeWRMap()
 	fmt.Print("demos end")
 }
